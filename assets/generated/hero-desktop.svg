@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="170" viewBox="0 0 880 170"><style>
+.ui{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+
+.line{stroke:#d0d7de}.soft-line{stroke:#eaeef2}.card{fill:#fffafb;stroke:#e4c8ce}
+.card-neutral{fill:#f6f8fa;stroke:#d0d7de}.text{fill:#1f2328}.muted{fill:#57606a}
+.label{fill:#6e5a60}.accent{fill:#c45168}.accent-stroke{stroke:#d4687b}.accent-soft{fill:#fbe7eb}
+.chip{fill:#ffffff;stroke:#e0bec6}.chip-text{fill:#713c48}.arrow{stroke:#c45168;fill:none}
+@media (prefers-color-scheme:dark){
+.line{stroke:#30363d}.soft-line{stroke:#21262d}.card{fill:#181316;stroke:#51313a}
+.card-neutral{fill:#161b22;stroke:#30363d}.text{fill:#f0f6fc}.muted{fill:#9aa4b2}
+.label{fill:#b8a0a6}.accent{fill:#ed9092}.accent-stroke{stroke:#ed9092}.accent-soft{fill:#352126}
+.chip{fill:#20191c;stroke:#633d47}.chip-text{fill:#f0b6bb}.arrow{stroke:#ed9092;fill:none}
+}</style><line x1="4" y1="8" x2="876" y2="8" class="line"/><text x="6" y="38" class="mono accent" font-size="9.5" font-weight="700" letter-spacing="1.45">COMPUTER ENGINEERING · SOFTWARE · RESEARCH</text><text x="6" y="83" class="ui text" font-size="39" font-weight="750" letter-spacing="-1.1">Gabriel Galvão</text><text x="6" y="119" class="ui text" font-size="22" font-weight="650" letter-spacing="-0.35">Building software with purpose. Learning beyond the obvious.</text><text x="8" y="146" class="mono muted" font-size="11.4" font-weight="400">Backend development, agile leadership, and quantum computing research at CEFET-MG.</text><circle cx="825" cy="55" r="27" class="accent-soft"/><circle cx="825" cy="55" r="8" class="accent"/><path d="M760 104 H848 M782 118 H862" class="accent-stroke" stroke-width="1.2" opacity="0.7"/><line x1="4" y1="162" x2="876" y2="162" class="line"/></svg>

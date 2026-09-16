@@ -1,0 +1,105 @@
+{
+  "meta": {
+    "name": "Gabriel Galvão",
+    "username": "gabrielgdrbandeira",
+    "eyebrow": "COMPUTER ENGINEERING · SOFTWARE · RESEARCH",
+    "headline": "Building software with purpose. Learning beyond the obvious.",
+    "summary": "Backend development, agile leadership, and quantum computing research at CEFET-MG."
+  },
+  "status": [
+    {
+      "label": "LEADING",
+      "value": "Scrum Master @ COMPET"
+    },
+    {
+      "label": "RESEARCHING",
+      "value": "Quantum Computing @ CEFET-MG"
+    },
+    {
+      "label": "BUILDING",
+      "value": "Backend systems @ PRISMA"
+    },
+    {
+      "label": "STUDYING",
+      "value": "Computer Engineering @ CEFET-MG"
+    }
+  ],
+  "focus": [
+    {
+      "mark": "QC",
+      "title": "Quantum Computing Research",
+      "category": "RESEARCH · PYTHON · QISKIT",
+      "description": "Building foundations in qubits, quantum circuits, core algorithms, and quantum machine learning."
+    },
+    {
+      "mark": "BE",
+      "title": "Backend Developer @ PRISMA",
+      "category": "SOFTWARE FACTORY · SOCIAL IMPACT",
+      "description": "Contributing to a management platform for INASIM, turning a real nonprofit need into working software."
+    },
+    {
+      "mark": "SM",
+      "title": "Scrum Master @ COMPET",
+      "category": "AGILE LEADERSHIP · TEAMWORK",
+      "description": "Supporting Administration, Development, Events, and Marketing through clearer sprints and continuous improvement."
+    }
+  ],
+  "experience": {
+    "title": "Systems Development Intern @ CEMSA",
+    "category": "QA · SOFTWARE MAINTENANCE · DATA VISUALIZATION",
+    "description": "Worked with software testing, web-system maintenance, the SIGAF application, and Amazon QuickSight dashboards for fatigue-test data."
+  },
+  "projects": [
+    {
+      "number": "01",
+      "title": "D'MABE",
+      "category": "NEXT.JS · TYPESCRIPT · TAILWIND CSS",
+      "description": "Responsive institutional website for business-benefits management and corporate collections.",
+      "url": "https://github.com/gabrielgdrbandeira/Dmabe"
+    },
+    {
+      "number": "02",
+      "title": "Fidelis & Cota",
+      "category": "NEXT.JS · TYPESCRIPT · RESPONSIVE UI",
+      "description": "Modern web presence for a law and consulting firm, including services, team, content, and contact flows.",
+      "url": "https://github.com/gabrielgdrbandeira/FidelisCota"
+    },
+    {
+      "number": "03",
+      "title": "3D Working Services",
+      "category": "HTML · CSS · JAVASCRIPT · GITHUB PAGES",
+      "description": "Product showcase and customer-contact experience for a custom 3D-printing business.",
+      "url": "https://github.com/gabrielgdrbandeira/3D-Working-Services"
+    }
+  ],
+  "stack": [
+    {
+      "label": "LANGUAGES",
+      "items": ["Python", "TypeScript", "C", "C++", "SQL"]
+    },
+    {
+      "label": "WEB",
+      "items": ["React", "Next.js", "Node.js", "Tailwind CSS"]
+    },
+    {
+      "label": "DATA & RESEARCH",
+      "items": ["MongoDB", "Qiskit", "Amazon QuickSight"]
+    },
+    {
+      "label": "WORKFLOW",
+      "items": ["Git", "GitHub", "Scrum", "QA", "Testing"]
+    }
+  ],
+  "contacts": [
+    {
+      "label": "LINKEDIN",
+      "value": "Gabriel Galvão dos Reis Bandeira",
+      "url": "https://www.linkedin.com/in/gabriel-galv%C3%A3o-dos-reis-bandeira-7ab960372/"
+    },
+    {
+      "label": "GITHUB",
+      "value": "Explore my public repositories",
+      "url": "https://github.com/gabrielgdrbandeira?tab=repositories"
+    }
+  ]
+}
