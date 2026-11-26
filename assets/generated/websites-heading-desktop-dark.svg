@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="42" viewBox="0 0 880 42">
+<style>
+.line{stroke:#30363d}.soft-line{stroke:#21262d}
+.card{fill:#161b22;stroke:#30363d}
+.mark{fill:#0d1117;stroke:#30363d}
+.linkedin{fill:#0a66c2}.linkedin-text{fill:#fff}
+.arrow{stroke:#9aa4b2;fill:none}
+text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;fill:#f0f6fc}
+.mono,.label,.status,.intro,.mark-text{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+.hero{font-family:Georgia,'Times New Roman',serif;font-weight:600;font-style:italic;font-size:34px}
+.hero-mobile{font-size:24px}
+.intro,.status{font-size:13px}
+.label{font-size:10px;font-weight:700;letter-spacing:1.1px}
+.mark-text{font-size:12px;font-weight:700}
+.section{font-size:15px;font-weight:500}.section-mobile{font-size:18px;font-weight:600}
+.title{font-size:14px;font-weight:700}.title-mobile{font-size:17px}
+.description{font-size:12px}.description-mobile{font-size:14.5px}
+.label,.intro,.description{fill:#9aa4b2}
+</style>
+<text x="3" y="22" class="section">Institutional websites</text>
+<line class="line" x1="3" y1="35" x2="877" y2="35"/>
+</svg>

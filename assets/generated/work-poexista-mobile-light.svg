@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="336" height="156" viewBox="0 0 336 156">
+<style>
+.line{stroke:#d0d7de}.soft-line{stroke:#eaeef2}
+.card{fill:#f6f8fa;stroke:#d0d7de}
+.mark{fill:#ffffff;stroke:#d0d7de}
+.linkedin{fill:#0a66c2}.linkedin-text{fill:#fff}
+.arrow{stroke:#57606a;fill:none}
+text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;fill:#1f2328}
+.mono,.label,.status,.intro,.mark-text{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+.hero{font-family:Georgia,'Times New Roman',serif;font-weight:600;font-style:italic;font-size:34px}
+.hero-mobile{font-size:24px}
+.intro,.status{font-size:13px}
+.label{font-size:10px;font-weight:700;letter-spacing:1.1px}
+.mark-text{font-size:12px;font-weight:700}
+.section{font-size:15px;font-weight:500}.section-mobile{font-size:18px;font-weight:600}
+.title{font-size:14px;font-weight:700}.title-mobile{font-size:17px}
+.description{font-size:12px}.description-mobile{font-size:14.5px}
+.label,.intro,.description{fill:#57606a}
+</style>
+<rect class="mark" x="16" y="12" width="44" height="44" rx="8"/>
+<text x="38.0" y="38.0" class="mark-text" text-anchor="middle">PX</text>
+<text x="76" y="27" class="title title-mobile">Poexista · Audiovisual</text>
+<text x="76" y="47" class="title title-mobile">Portfolio</text>
+<text x="16" y="69" class="label mono">PROTOTYPE · REACT · TYPESCRIPT</text>
+<text x="16" y="92" class="description description-mobile">Built a bilingual film portfolio</text>
+<text x="16" y="112" class="description description-mobile">prototype and a local dashboard for</text>
+<text x="16" y="132" class="description description-mobile">publishing projects and credits.</text>
+<line class="line" x1="16" y1="149" x2="320" y2="149"/>
+</svg>

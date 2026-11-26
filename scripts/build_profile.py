@@ -1,486 +1,333 @@
 #!/usr/bin/env python3
+# Layout adapted from https://github.com/santana-iago/santana-iago (MIT).
+# See LICENSE.profile-template in this directory.
 from __future__ import annotations
 
 import html
 import json
 from pathlib import Path
-from typing import Any
+from urllib.parse import urldefrag
 
 
 ROOT = Path(__file__).resolve().parents[1]
 GENERATED = ROOT / "assets" / "generated"
 DESKTOP_WIDTH = 880
-MOBILE_WIDTH = 360
+MOBILE_WIDTH = 336
+DESKTOP_BREAKPOINT = 1280
+SECTIONS = (
+    ("featured", "Featured work", 3),
+    ("websites", "Institutional websites", 2),
+    ("other_work", "Other work", 2),
+)
+THEMES = {
+    "light": {
+        "text": "#1f2328",
+        "muted": "#57606a",
+        "line": "#d0d7de",
+        "soft_line": "#eaeef2",
+        "card": "#f6f8fa",
+        "mark": "#ffffff",
+    },
+    "dark": {
+        "text": "#f0f6fc",
+        "muted": "#9aa4b2",
+        "line": "#30363d",
+        "soft_line": "#21262d",
+        "card": "#161b22",
+        "mark": "#0d1117",
+    },
+}
 
 
-def load_profile() -> dict[str, Any]:
-    return json.loads((ROOT / "profile.json").read_text(encoding="utf-8"))
-
-
-def esc(value: Any) -> str:
-    return html.escape(str(value), quote=True)
-
-
-def wrap_words(value: str, max_chars: int, max_lines: int) -> list[str]:
-    words = value.split()
-    lines: list[str] = []
-    current: list[str] = []
-    for word in words:
-        candidate = " ".join(current + [word])
-        if current and len(candidate) > max_chars:
-            lines.append(" ".join(current))
-            current = [word]
-        else:
-            current.append(word)
-    if current:
-        lines.append(" ".join(current))
-    if len(lines) > max_lines:
-        lines = lines[:max_lines]
-        lines[-1] = lines[-1].rstrip(" .") + "…"
-    return lines or [""]
-
-
-def theme_css() -> str:
-    light = """
-.line{stroke:#d0d7de}.soft-line{stroke:#eaeef2}.card{fill:#fffafb;stroke:#e4c8ce}
-.card-neutral{fill:#f6f8fa;stroke:#d0d7de}.text{fill:#1f2328}.muted{fill:#57606a}
-.label{fill:#6e5a60}.accent{fill:#c45168}.accent-stroke{stroke:#d4687b}.accent-soft{fill:#fbe7eb}
-.chip{fill:#ffffff;stroke:#e0bec6}.chip-text{fill:#713c48}.arrow{stroke:#c45168;fill:none}
+def svg_open(width: int, height: int, theme: str) -> list[str]:
+    colors = THEMES[theme]
+    styles = f"""
+.line{{stroke:{colors["line"]}}}.soft-line{{stroke:{colors["soft_line"]}}}
+.card{{fill:{colors["card"]};stroke:{colors["line"]}}}
+.mark{{fill:{colors["mark"]};stroke:{colors["line"]}}}
+.linkedin{{fill:#0a66c2}}.linkedin-text{{fill:#fff}}
+.arrow{{stroke:{colors["muted"]};fill:none}}
+text{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;fill:{colors["text"]}}}
+.mono,.label,.status,.intro,.mark-text{{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}}
+.hero{{font-family:Georgia,'Times New Roman',serif;font-weight:600;font-style:italic;font-size:34px}}
+.hero-mobile{{font-size:24px}}
+.intro,.status{{font-size:13px}}
+.label{{font-size:10px;font-weight:700;letter-spacing:1.1px}}
+.mark-text{{font-size:12px;font-weight:700}}
+.section{{font-size:15px;font-weight:500}}.section-mobile{{font-size:18px;font-weight:600}}
+.title{{font-size:14px;font-weight:700}}.title-mobile{{font-size:17px}}
+.description{{font-size:12px}}.description-mobile{{font-size:14.5px}}
+.label,.intro,.description{{fill:{colors["muted"]}}}
 """
-    dark = """
-.line{stroke:#30363d}.soft-line{stroke:#21262d}.card{fill:#181316;stroke:#51313a}
-.card-neutral{fill:#161b22;stroke:#30363d}.text{fill:#f0f6fc}.muted{fill:#9aa4b2}
-.label{fill:#b8a0a6}.accent{fill:#ed9092}.accent-stroke{stroke:#ed9092}.accent-soft{fill:#352126}
-.chip{fill:#20191c;stroke:#633d47}.chip-text{fill:#f0b6bb}.arrow{stroke:#ed9092;fill:none}
-"""
-    typography = """
-.ui{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
-"""
-    return typography + light + f"@media (prefers-color-scheme:dark){{{dark}}}"
-
-
-def svg_open(width: int, height: int) -> list[str]:
     return [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
-        f"<style>{theme_css()}</style>",
+        f"<style>{styles}</style>",
     ]
+
+
+def add_text(parts: list[str], x: float, y: float, value: str, css: str, *, center: bool = False) -> None:
+    anchor = ' text-anchor="middle"' if center else ""
+    parts.append(f'<text x="{x}" y="{y}" class="{css}"{anchor}>{html.escape(value)}</text>')
+
+
+def add_lines(parts: list[str], x: int, y: int, lines: list[str], css: str, line_height: int) -> None:
+    for index, line in enumerate(lines):
+        add_text(parts, x, y + index * line_height, line, css)
+
+
+def line(parts: list[str], x1: float, y1: float, x2: float, y2: float, css: str = "line") -> None:
+    parts.append(f'<line class="{css}" x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}"/>')
+
+
+def mark(parts: list[str], x: int, y: int, size: int, label: str, *, linkedin: bool = False) -> None:
+    css = "linkedin" if linkedin else "mark"
+    text_css = "mark-text linkedin-text" if linkedin else "mark-text"
+    parts.append(f'<rect class="{css}" x="{x}" y="{y}" width="{size}" height="{size}" rx="8"/>')
+    add_text(parts, x + size / 2, y + size / 2 + 4, label, text_css, center=True)
+
+
+def arrow(parts: list[str], x: int, y: int) -> None:
+    parts.append(
+        f'<path d="M{x-4} {y+4} L{x+4} {y-4} M{x-1} {y-4} H{x+4} V{y+1}" '
+        'class="arrow" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>'
+    )
+
+
+def wrap_words(value: str, max_chars: int) -> list[str]:
+    lines = []
+    current = ""
+    for word in value.split():
+        candidate = f"{current} {word}" if current else word
+        if current and len(candidate) > max_chars:
+            lines.append(current)
+            current = word
+        else:
+            current = candidate
+    if current:
+        lines.append(current)
+    return lines
 
 
 def svg_close(parts: list[str]) -> str:
-    parts.append("</svg>")
-    return "".join(parts)
+    return "\n".join([*parts, "</svg>", ""])
 
 
-def add_text(
-    parts: list[str],
-    x: float,
-    y: float,
-    value: str,
-    cls: str,
-    size: float,
-    weight: int = 400,
-    anchor: str | None = None,
-    letter_spacing: float | None = None,
-    italic: bool = False,
-) -> None:
-    attrs = [
-        f'x="{x}"',
-        f'y="{y}"',
-        f'class="{cls}"',
-        f'font-size="{size}"',
-        f'font-weight="{weight}"',
-    ]
-    if anchor:
-        attrs.append(f'text-anchor="{anchor}"')
-    if letter_spacing is not None:
-        attrs.append(f'letter-spacing="{letter_spacing}"')
-    if italic:
-        attrs.append('font-style="italic"')
-    parts.append(f"<text {' '.join(attrs)}>{esc(value)}</text>")
+def hero(meta: dict, mobile: bool, theme: str) -> str:
+    width = MOBILE_WIDTH if mobile else DESKTOP_WIDTH
+    left, name_y, intro_y = (16, 36, 62) if mobile else (3, 58, 91)
+    intro = wrap_words(meta["introduction"], 36 if mobile else 94)
+    bottom = intro_y + (len(intro) - 1) * 18 + 17
+    parts = svg_open(width, bottom + 8, theme)
+    line(parts, left, 6, width - left, 6)
+    add_text(parts, left, name_y, meta["name"], "hero hero-mobile" if mobile else "hero")
+    add_lines(parts, left, intro_y, intro, "intro", 18)
+    line(parts, left, bottom, width - left, bottom)
+    return svg_close(parts)
 
 
-def add_multiline(
-    parts: list[str],
-    x: float,
-    y: float,
-    lines: list[str],
-    cls: str,
-    size: float,
-    weight: int,
-    line_height: float,
-    letter_spacing: float | None = None,
-) -> None:
-    letter_attr = f' letter-spacing="{letter_spacing}"' if letter_spacing is not None else ""
-    parts.append(
-        f'<text x="{x}" y="{y}" class="{cls}" font-size="{size}" '
-        f'font-weight="{weight}"{letter_attr}>'
-    )
-    for index, line in enumerate(lines):
-        parts.append(f'<tspan x="{x}" dy="{0 if index == 0 else line_height}">{esc(line)}</tspan>')
-    parts.append("</text>")
+def status(items: list[dict], mobile: bool, theme: str) -> str:
+    width = MOBILE_WIDTH if mobile else DESKTOP_WIDTH
+    height = 60 * len(items) + 6 if mobile else 72
+    parts = svg_open(width, height, theme)
+    if mobile:
+        for index, item in enumerate(items):
+            y = 60 * index
+            add_text(parts, 16, y + 21, item["label"], "label mono")
+            add_text(parts, 16, y + 43, item["value"], "status")
+            line(parts, 16, y + 55, width - 16, y + 55)
+    else:
+        column_width = width / len(items)
+        for index, item in enumerate(items):
+            x = round(column_width * index)
+            if index:
+                line(parts, x, 16, x, height - 16)
+            add_text(parts, x + 14, 26, item["label"], "label mono")
+            add_text(parts, x + 14, 48, item["value"], "status")
+        line(parts, 0, height - 1, width, height - 1)
+    return svg_close(parts)
 
 
-def add_round_rect(
-    parts: list[str], x: float, y: float, width: float, height: float, radius: float, cls: str
-) -> None:
-    parts.append(
-        f'<rect x="{x}" y="{y}" width="{width}" height="{height}" rx="{radius}" class="{cls}"/>'
-    )
+def contact(item: dict, mobile: bool, theme: str) -> str:
+    width, height = (MOBILE_WIDTH, 76) if mobile else (265, 76)
+    parts = svg_open(width, height, theme)
+    parts.append(f'<rect class="card" x=".5" y="3.5" width="{width - 1}" height="68" rx="10"/>')
+    mark(parts, 20, 23, 28, item["mark"], linkedin=item["label"] == "LinkedIn")
+    add_text(parts, 60, 28, item["label"].upper(), "label mono")
+    values = wrap_words(item["value"], 30 if mobile else 22)
+    add_lines(parts, 60, 51 if len(values) == 1 else 45, values, "status", 15)
+    arrow(parts, width - 20, 38)
+    return svg_close(parts)
 
 
-def add_arrow(parts: list[str], x: float, y: float) -> None:
-    parts.append(
-        f'<path d="M{x-5} {y+5} L{x+5} {y-5} M{x} {y-5} H{x+5} V{y}" '
-        'class="arrow" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>'
-    )
+def heading(title: str, mobile: bool, theme: str) -> str:
+    width, height, left = (MOBILE_WIDTH, 52, 16) if mobile else (DESKTOP_WIDTH, 42, 3)
+    parts = svg_open(width, height, theme)
+    add_text(parts, left, height - 20, title, "section section-mobile" if mobile else "section")
+    line(parts, left, height - 7, width - left, height - 7)
+    return svg_close(parts)
 
 
-def generate_hero(profile: dict[str, Any], mobile: bool) -> str:
+def mobile_card(item: dict, theme: str) -> str:
+    titles = wrap_words(item["title"], 25)
+    categories = wrap_words(item["category"], 36)
+    descriptions = wrap_words(item["description"], 39)
+    title_y = 37 if len(titles) == 1 else 27
+    category_y = max(69, title_y + 20 * (len(titles) - 1) + 21)
+    description_y = category_y + 14 * (len(categories) - 1) + 23
+    bottom = description_y + 20 * (len(descriptions) - 1) + 17
+    parts = svg_open(MOBILE_WIDTH, bottom + 7, theme)
+    mark(parts, 16, 12, 44, item["mark"])
+    add_lines(parts, 76, title_y, titles, "title title-mobile", 20)
+    add_lines(parts, 16, category_y, categories, "label mono", 14)
+    add_lines(parts, 16, description_y, descriptions, "description description-mobile", 20)
+    if item.get("url"):
+        arrow(parts, MOBILE_WIDTH - 20, 24)
+    line(parts, 16, bottom, MOBILE_WIDTH - 16, bottom)
+    return svg_close(parts)
+
+
+def desktop_cards(items: list[dict], theme: str, *, featured: bool) -> list[str]:
+    width = 276 if featured else 390
+    title_x, title_y = (72, 24) if featured else (82, 26)
+    description_x = 8 if featured else title_x
+    titles = [wrap_words(item["title"], 20 if featured else 33) for item in items]
+    categories = [wrap_words(item["category"], 23 if featured else 37) for item in items]
+    descriptions = [wrap_words(item["description"], 40 if featured else 44) for item in items]
+    category_y = max(62 if featured else 53, title_y + (max(map(len, titles)) - 1) * 17 + 22)
+    description_y = category_y + (max(map(len, categories)) - 1) * 13 + (28 if featured else 21)
+    bottom = description_y + (max(map(len, descriptions)) - 1) * 17 + 15
+    slides = []
+    for index, item in enumerate(items):
+        parts = svg_open(width, bottom + 7, theme)
+        mark(parts, 8 if featured else 12, 10 if featured else 28, 44, item["mark"])
+        add_lines(parts, title_x, title_y, titles[index], "title", 17)
+        add_lines(parts, title_x, category_y, categories[index], "label mono", 13)
+        add_lines(parts, description_x, description_y, descriptions[index], "description", 17)
+        if item.get("url"):
+            arrow(parts, width - 18, 17)
+        if index + 1 < len(items):
+            line(parts, width - 1, 1, width - 1, bottom, "soft-line")
+        line(parts, 2, bottom, width - 2, bottom)
+        slides.append(svg_close(parts))
+    return slides
+
+
+def picture(name: str, alt: str, url: str | None = None) -> str:
+    base = f"./assets/generated/{name}"
+    images = []
+    for theme in THEMES:
+        marker = f"#gh-{theme}-mode-only"
+        href = html.escape(urldefrag(url).url + marker, quote=True) if url else marker
+        tab = "" if url else ' tabindex="-1"'
+        images.append(
+            f'<a href="{href}"{tab}><picture>'
+            f'<source media="(min-width: {DESKTOP_BREAKPOINT}px)" srcset="{base}-desktop-{theme}.svg{marker}">'
+            f'<img src="{base}-mobile-{theme}.svg{marker}" alt="{html.escape(alt, quote=True)}">'
+            '</picture></a>'
+        )
+    return "".join(images)
+
+
+def card_picture(item: dict) -> str:
+    alt = f'{item["title"]}. {item["description"]}'
+    return picture(f'work-{item["id"]}', alt, item.get("url"))
+
+
+def readme(profile: dict) -> str:
     meta = profile["meta"]
-    width = MOBILE_WIDTH if mobile else DESKTOP_WIDTH
-    height = 208 if mobile else 170
-    parts = svg_open(width, height)
-    margin = 18 if mobile else 4
-    parts.append(f'<line x1="{margin}" y1="8" x2="{width-margin}" y2="8" class="line"/>')
-
-    if mobile:
-        add_text(parts, 18, 41, meta["eyebrow"], "mono accent", 8.2, 700, letter_spacing=1.0)
-        add_text(parts, 18, 80, meta["name"], "ui text", 31, 750, letter_spacing=-0.8)
-        headline = wrap_words(meta["headline"], 31, 2)
-        add_multiline(parts, 18, 112, headline, "ui text", 17.5, 650, 23)
-        summary = wrap_words(meta["summary"], 46, 3)
-        add_multiline(parts, 18, 166, summary, "mono muted", 9.2, 400, 14)
-        parts.append('<circle cx="326" cy="43" r="17" class="accent-soft"/>')
-        parts.append('<circle cx="326" cy="43" r="5" class="accent"/>')
-    else:
-        add_text(parts, 6, 38, meta["eyebrow"], "mono accent", 9.5, 700, letter_spacing=1.45)
-        add_text(parts, 6, 83, meta["name"], "ui text", 39, 750, letter_spacing=-1.1)
-        add_text(parts, 6, 119, meta["headline"], "ui text", 22, 650, letter_spacing=-0.35)
-        add_text(parts, 8, 146, meta["summary"], "mono muted", 11.4, 400)
-        parts.append('<circle cx="825" cy="55" r="27" class="accent-soft"/>')
-        parts.append('<circle cx="825" cy="55" r="8" class="accent"/>')
-        parts.append('<path d="M760 104 H848 M782 118 H862" class="accent-stroke" stroke-width="1.2" opacity="0.7"/>')
-
-    parts.append(f'<line x1="{margin}" y1="{height-8}" x2="{width-margin}" y2="{height-8}" class="line"/>')
-    return svg_close(parts)
-
-
-def generate_status(profile: dict[str, Any], mobile: bool) -> str:
-    items = profile["status"]
-    width = MOBILE_WIDTH if mobile else DESKTOP_WIDTH
-    height = 278 if mobile else 174
-    parts = svg_open(width, height)
-    margin = 18 if mobile else 4
-    add_text(parts, margin, 27, "RIGHT NOW", "mono label", 8.5, 700, letter_spacing=1.5)
-    parts.append(f'<line x1="{margin}" y1="42" x2="{width-margin}" y2="42" class="line"/>')
-
-    if mobile:
-        for i, item in enumerate(items):
-            y = 68 + i * 51
-            add_text(parts, margin, y, item["label"], "mono accent", 8.3, 700, letter_spacing=1.25)
-            add_text(parts, margin, y + 21, item["value"], "ui text", 13.2, 600)
-            if i < len(items) - 1:
-                parts.append(f'<line x1="{margin}" y1="{y+33}" x2="{width-margin}" y2="{y+33}" class="soft-line"/>')
-    else:
-        cell_width = (width - 8) / 2
-        for i, item in enumerate(items):
-            row, col = divmod(i, 2)
-            x = 8 + col * cell_width
-            y = 72 + row * 54
-            if col == 1:
-                parts.append(f'<line x1="{x-16}" y1="56" x2="{x-16}" y2="158" class="soft-line"/>')
-            add_text(parts, x, y, item["label"], "mono accent", 8.5, 700, letter_spacing=1.35)
-            add_text(parts, x, y + 22, item["value"], "ui text", 14.2, 600)
-        parts.append('<line x1="4" y1="112" x2="876" y2="112" class="soft-line"/>')
-    parts.append(f'<line x1="{margin}" y1="{height-6}" x2="{width-margin}" y2="{height-6}" class="line"/>')
-    return svg_close(parts)
-
-
-def generate_header(title: str, mobile: bool) -> str:
-    width = MOBILE_WIDTH if mobile else DESKTOP_WIDTH
-    height = 58 if mobile else 52
-    parts = svg_open(width, height)
-    margin = 18 if mobile else 4
-    add_text(parts, margin, 29, title.lower(), "ui text", 18 if mobile else 15, 650, letter_spacing=-0.2)
-    parts.append(f'<line x1="{margin}" y1="{height-6}" x2="{width-margin}" y2="{height-6}" class="line"/>')
-    return svg_close(parts)
-
-
-def generate_focus_card(item: dict[str, Any], mobile: bool) -> str:
-    width, height = (328, 210) if mobile else (284, 246)
-    parts = svg_open(width, height)
-    add_round_rect(parts, 2, 2, width - 4, height - 4, 14, "card")
-    parts.append(f'<rect x="2" y="2" width="{width-4}" height="5" rx="3" class="accent"/>')
-    add_round_rect(parts, 18, 20, 40, 40, 20, "accent-soft")
-    add_text(parts, 38, 46, item["mark"], "mono accent", 11, 800, anchor="middle", letter_spacing=0.8)
-
-    if mobile:
-        title_lines = wrap_words(item["title"], 30, 2)
-        add_multiline(parts, 18, 88, title_lines, "ui text", 18, 720, 22)
-        category_y = 88 + (len(title_lines) - 1) * 22 + 27
-        cat_lines = wrap_words(item["category"], 42, 2)
-        add_multiline(parts, 18, category_y, cat_lines, "mono accent", 8.2, 700, 12, 0.65)
-        desc_y = category_y + (len(cat_lines) - 1) * 12 + 28
-        desc_lines = wrap_words(item["description"], 48, 3)
-        add_multiline(parts, 18, desc_y, desc_lines, "ui muted", 11.5, 400, 16)
-    else:
-        title_lines = wrap_words(item["title"], 26, 2)
-        add_multiline(parts, 18, 92, title_lines, "ui text", 17, 720, 22)
-        category_y = 92 + (len(title_lines) - 1) * 22 + 27
-        cat_lines = wrap_words(item["category"], 34, 2)
-        add_multiline(parts, 18, category_y, cat_lines, "mono accent", 7.8, 700, 12, 0.6)
-        desc_y = category_y + (len(cat_lines) - 1) * 12 + 31
-        desc_lines = wrap_words(item["description"], 38, 4)
-        add_multiline(parts, 18, desc_y, desc_lines, "ui muted", 11.3, 400, 17)
-    return svg_close(parts)
-
-
-def generate_experience_card(item: dict[str, Any], mobile: bool) -> str:
-    width = MOBILE_WIDTH if mobile else DESKTOP_WIDTH
-    height = 184 if mobile else 150
-    margin = 18 if mobile else 4
-    parts = svg_open(width, height)
-    add_round_rect(parts, margin, 2, width - 2 * margin, height - 8, 14, "card-neutral")
-    parts.append(f'<rect x="{margin}" y="2" width="5" height="{height-8}" rx="3" class="accent"/>')
-    if mobile:
-        add_text(parts, 38, 35, "PREVIOUS EXPERIENCE", "mono accent", 8.2, 700, letter_spacing=1.2)
-        title_lines = wrap_words(item["title"], 38, 2)
-        add_multiline(parts, 38, 64, title_lines, "ui text", 16.5, 720, 21)
-        cat_y = 64 + (len(title_lines) - 1) * 21 + 26
-        cat_lines = wrap_words(item["category"], 43, 2)
-        add_multiline(parts, 38, cat_y, cat_lines, "mono label", 7.8, 700, 11, 0.65)
-        desc_y = cat_y + (len(cat_lines) - 1) * 11 + 27
-        desc_lines = wrap_words(item["description"], 48, 3)
-        add_multiline(parts, 38, desc_y, desc_lines, "ui muted", 10.7, 400, 15)
-    else:
-        add_text(parts, 28, 34, "PREVIOUS EXPERIENCE", "mono accent", 8.4, 700, letter_spacing=1.3)
-        add_text(parts, 28, 67, item["title"], "ui text", 19, 720, letter_spacing=-0.2)
-        add_text(parts, 28, 93, item["category"], "mono label", 8.2, 700, letter_spacing=0.85)
-        desc_lines = wrap_words(item["description"], 106, 2)
-        add_multiline(parts, 28, 122, desc_lines, "ui muted", 11.4, 400, 17)
-    return svg_close(parts)
-
-
-def generate_project_card(item: dict[str, Any], mobile: bool) -> str:
-    width, height = (328, 194) if mobile else (284, 226)
-    parts = svg_open(width, height)
-    add_round_rect(parts, 2, 2, width - 4, height - 4, 14, "card-neutral")
-    add_text(parts, 18, 34, item["number"], "mono accent", 9, 800, letter_spacing=1.25)
-    add_arrow(parts, width - 24, 27)
-
-    if mobile:
-        add_text(parts, 18, 68, item["title"], "ui text", 18, 720, letter_spacing=-0.2)
-        cat_lines = wrap_words(item["category"], 43, 2)
-        add_multiline(parts, 18, 96, cat_lines, "mono accent", 8.1, 700, 12, 0.6)
-        desc_y = 96 + (len(cat_lines) - 1) * 12 + 30
-        desc_lines = wrap_words(item["description"], 48, 3)
-        add_multiline(parts, 18, desc_y, desc_lines, "ui muted", 11.2, 400, 16)
-    else:
-        title_lines = wrap_words(item["title"], 27, 2)
-        add_multiline(parts, 18, 72, title_lines, "ui text", 17.5, 720, 22)
-        cat_y = 72 + (len(title_lines) - 1) * 22 + 27
-        cat_lines = wrap_words(item["category"], 34, 2)
-        add_multiline(parts, 18, cat_y, cat_lines, "mono accent", 7.7, 700, 12, 0.55)
-        desc_y = cat_y + (len(cat_lines) - 1) * 12 + 30
-        desc_lines = wrap_words(item["description"], 38, 4)
-        add_multiline(parts, 18, desc_y, desc_lines, "ui muted", 11.1, 400, 16)
-    return svg_close(parts)
-
-
-def generate_stack(profile: dict[str, Any], mobile: bool) -> str:
-    groups = profile["stack"]
-    width = MOBILE_WIDTH if mobile else DESKTOP_WIDTH
-    height = 370 if mobile else 230
-    parts = svg_open(width, height)
-    margin = 18 if mobile else 4
-
-    if mobile:
-        for i, group in enumerate(groups):
-            y = 8 + i * 88
-            add_round_rect(parts, margin, y, width - 2 * margin, 76, 12, "card-neutral")
-            add_text(parts, margin + 16, y + 25, group["label"], "mono accent", 8.2, 700, letter_spacing=1.2)
-            items = "  ·  ".join(group["items"])
-            lines = wrap_words(items, 44, 2)
-            add_multiline(parts, margin + 16, y + 51, lines, "ui text", 12, 600, 16)
-    else:
-        card_width = (width - 24) / 2
-        for i, group in enumerate(groups):
-            row, col = divmod(i, 2)
-            x = 4 + col * (card_width + 16)
-            y = 4 + row * 108
-            add_round_rect(parts, x, y, card_width, 94, 12, "card-neutral")
-            add_text(parts, x + 18, y + 29, group["label"], "mono accent", 8.4, 700, letter_spacing=1.25)
-            items = "  ·  ".join(group["items"])
-            lines = wrap_words(items, 54, 2)
-            add_multiline(parts, x + 18, y + 59, lines, "ui text", 12.5, 600, 18)
-    return svg_close(parts)
-
-
-def generate_contact_card(item: dict[str, Any], mobile: bool) -> str:
-    width, height = (328, 78) if mobile else (430, 78)
-    parts = svg_open(width, height)
-    add_round_rect(parts, 2, 2, width - 4, height - 4, 13, "card")
-    add_round_rect(parts, 16, 17, 42, 42, 21, "accent-soft")
-    initials = "in" if item["label"] == "LINKEDIN" else "GH"
-    add_text(parts, 37, 44, initials, "mono accent", 12, 800, anchor="middle")
-    add_text(parts, 72, 28, item["label"], "mono label", 7.8, 700, letter_spacing=1.25)
-    value = item["value"]
-    max_chars = 31 if mobile else 48
-    if len(value) > max_chars:
-        value = value[: max_chars - 1] + "…"
-    add_text(parts, 72, 52, value, "ui text", 12.3 if mobile else 13, 650)
-    add_arrow(parts, width - 24, 39)
-    return svg_close(parts)
-
-
-def responsive_picture(base: str, alt: str, width: str | None = None) -> str:
-    width_attr = f' width="{width}"' if width else ""
-    return (
-        f'<picture><source media="(max-width: 480px)" '
-        f'srcset="./assets/generated/{base}-mobile.svg">'
-        f'<img src="./assets/generated/{base}-desktop.svg"{width_attr} alt="{esc(alt)}"></picture>'
-    )
-
-
-def generate_readme(profile: dict[str, Any]) -> str:
-    meta = profile["meta"]
-    lines: list[str] = [
+    contacts = profile["contacts"]
+    status_alt = ". ".join(item["value"].replace(" @ ", " at ") for item in profile["status"])
+    lines = [
         '<div align="center">',
-        responsive_picture("hero", f'{meta["name"]}. {meta["headline"]}', "100%"),
-        responsive_picture("status", "Current roles and areas of focus.", "100%"),
+        picture("hero", f'{meta["full_name"]}. {meta["introduction"]}'),
+        picture("status", status_alt),
         "</div>",
         "",
-        "<br>",
-        "",
-        responsive_picture("current-header", "Current focus.", "100%"),
         '<p align="center">',
+        "&#8195;".join(picture(f'contact-{item["label"].lower()}', item["label"], item["url"]) for item in contacts),
+        "</p>",
+        "",
+        '<p align="center">',
+        " · ".join(f'<a href="#section-{key.replace("_", "-")}">{title}</a>' for key, title, _ in SECTIONS),
+        "</p>",
+        "",
     ]
-
-    for index, item in enumerate(profile["focus"]):
-        lines.append(responsive_picture(f"focus-{index}", item["title"]))
+    for key, title, row_size in SECTIONS:
+        slug = key.replace("_", "-")
+        entries = profile[key]
+        lines.extend([
+            f'<a name="section-{slug}"></a>',
+            "",
+            '<div align="center">',
+            picture(f"{slug}-heading", title),
+        ])
+        for start in range(0, len(entries), row_size):
+            cards = "".join(card_picture(item) for item in entries[start:start + row_size])
+            lines.append(f'<div align="center">{cards}</div>')
+        lines.extend(["</div>", ""])
     lines.extend([
-        "</p>",
-        "",
-        responsive_picture("experience-header", "Previous experience.", "100%"),
-        responsive_picture("experience", profile["experience"]["title"], "100%"),
-        "",
-        responsive_picture("projects-header", "Selected projects.", "100%"),
-        '<p align="center">',
-    ])
-    for index, item in enumerate(profile["projects"]):
-        card = responsive_picture(f"project-{index}", item["title"])
-        lines.append(f'<a href="{esc(item["url"])}">{card}</a>')
-    lines.extend([
-        "</p>",
-        "",
-        responsive_picture("stack-header", "Technical toolkit.", "100%"),
-        responsive_picture("stack", "Languages, web technologies, data tools, research tools, and workflow practices.", "100%"),
-        "",
-        responsive_picture("contact-header", "Contact.", "100%"),
-        '<p align="center">',
-    ])
-    for index, item in enumerate(profile["contacts"]):
-        card = responsive_picture(f"contact-{index}", f'{item["label"]}: {item["value"]}')
-        lines.append(f'<a href="{esc(item["url"])}">{card}</a>')
-    lines.extend([
-        "</p>",
-        "",
-        responsive_picture("stats-header", "GitHub profile statistics.", "100%"),
-        '<picture>',
-        '  <source media="(prefers-color-scheme: dark)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=gabrielgdrbandeira&theme=github_dark">',
-        '  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=gabrielgdrbandeira&theme=github" width="100%" alt="Gabriel Galvão GitHub profile statistics">',
-        '</picture>',
-        "",
         "<details>",
         "<summary>Accessible text version</summary>",
         "",
-        f'# {meta["name"]}',
-        f'**{meta["headline"]}**',
+        f'# {meta["full_name"]}',
         "",
-        meta["summary"],
+        meta["introduction"],
         "",
-        "## Current focus",
+        " · ".join(f'[{item["label"]}]({item["url"]})' for item in contacts),
+        "",
     ])
-    for item in profile["focus"]:
-        lines.extend([
-            f'### {item["title"]}',
-            f'*{item["category"]}*',
-            "",
-            item["description"],
-            "",
-        ])
-    exp = profile["experience"]
-    lines.extend([
-        "## Previous experience",
-        f'### {exp["title"]}',
-        f'*{exp["category"]}*',
-        "",
-        exp["description"],
-        "",
-        "## Selected projects",
-    ])
-    for item in profile["projects"]:
-        lines.extend([
-            f'### [{item["title"]}]({item["url"]})',
-            f'*{item["category"]}*',
-            "",
-            item["description"],
-            "",
-        ])
-    lines.append("## Technical toolkit")
-    for group in profile["stack"]:
-        lines.append(f'- **{group["label"].title()}**: {", ".join(group["items"])}')
-    lines.extend([
-        "",
-        "## Contact",
-    ])
-    for item in profile["contacts"]:
-        lines.append(f'- [{item["label"].title()}]({item["url"]})')
+    for key, title, _ in SECTIONS:
+        lines.extend([f"## {title}", ""])
+        for item in profile[key]:
+            lines.extend([f'### {item["title"]}', "", f'*{item["category"]}*', "", item["description"], ""])
+            if item.get("details"):
+                lines.extend([item["details"], ""])
+            if item.get("code_url"):
+                lines.extend([f'[Live site]({item["url"]}) · [Source code]({item["code_url"]})', ""])
+            elif item.get("url"):
+                lines.extend([f'[Open {item["title"]}]({item["url"]})', ""])
+    lines.extend(["## Coursework and practice", ""])
+    for item in profile["practice"]:
+        lines.append(f'- [{item["title"]}]({item["url"]}) — {item["description"]}')
+    lines.extend(["", "## Technical toolkit", ""])
+    for group in profile["toolkit"]:
+        lines.append(f'- **{group["label"]}** · {", ".join(group["items"])}')
     lines.extend([
         "",
         "</details>",
         "",
-        "<!-- Generated from profile.json with scripts/build_profile.py. -->",
+        "<!-- Layout adapted from github.com/santana-iago/santana-iago under MIT.",
+        "Edit profile.json and run python scripts/build_profile.py to regenerate. -->",
         "",
     ])
     return "\n".join(lines)
 
 
-def save_generated(profile: dict[str, Any]) -> None:
+def save_generated(profile: dict) -> None:
     GENERATED.mkdir(parents=True, exist_ok=True)
-    for old_file in GENERATED.glob("*.svg"):
-        old_file.unlink()
-
-    outputs: dict[str, str] = {}
-    for mobile, suffix in ((False, "desktop"), (True, "mobile")):
-        outputs[f"hero-{suffix}.svg"] = generate_hero(profile, mobile)
-        outputs[f"status-{suffix}.svg"] = generate_status(profile, mobile)
-        outputs[f"current-header-{suffix}.svg"] = generate_header("current focus", mobile)
-        outputs[f"experience-header-{suffix}.svg"] = generate_header("previous experience", mobile)
-        outputs[f"projects-header-{suffix}.svg"] = generate_header("selected projects", mobile)
-        outputs[f"stack-header-{suffix}.svg"] = generate_header("technical toolkit", mobile)
-        outputs[f"contact-header-{suffix}.svg"] = generate_header("let's connect", mobile)
-        outputs[f"stats-header-{suffix}.svg"] = generate_header("github profile statistics", mobile)
-        outputs[f"experience-{suffix}.svg"] = generate_experience_card(profile["experience"], mobile)
-        outputs[f"stack-{suffix}.svg"] = generate_stack(profile, mobile)
-        for index, item in enumerate(profile["focus"]):
-            outputs[f"focus-{index}-{suffix}.svg"] = generate_focus_card(item, mobile)
-        for index, item in enumerate(profile["projects"]):
-            outputs[f"project-{index}-{suffix}.svg"] = generate_project_card(item, mobile)
-        for index, item in enumerate(profile["contacts"]):
-            outputs[f"contact-{index}-{suffix}.svg"] = generate_contact_card(item, mobile)
-
-    for name, content in outputs.items():
-        (GENERATED / name).write_text(content, encoding="utf-8")
-    (ROOT / "README.md").write_text(generate_readme(profile), encoding="utf-8")
-
-
-def main() -> None:
-    profile = load_profile()
-    save_generated(profile)
-    print(f"Generated profile README and {len(list(GENERATED.glob('*.svg')))} SVG assets.")
+    for theme in THEMES:
+        for layout, mobile in (("desktop", False), ("mobile", True)):
+            assets = {
+                "hero": hero(profile["meta"], mobile, theme),
+                "status": status(profile["status"], mobile, theme),
+            }
+            for item in profile["contacts"]:
+                assets[f'contact-{item["label"].lower()}'] = contact(item, mobile, theme)
+            for key, title, row_size in SECTIONS:
+                assets[f'{key.replace("_", "-")}-heading'] = heading(title, mobile, theme)
+                entries = profile[key]
+                for start in range(0, len(entries), row_size):
+                    items = entries[start:start + row_size]
+                    if mobile:
+                        cards = [mobile_card(item, theme) for item in items]
+                    else:
+                        cards = desktop_cards(items, theme, featured=key == "featured")
+                    for item, card in zip(items, cards):
+                        assets[f'work-{item["id"]}'] = card
+            for name, content in assets.items():
+                (GENERATED / f"{name}-{layout}-{theme}.svg").write_text(content, encoding="utf-8", newline="\n")
+    (ROOT / "README.md").write_text(readme(profile), encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":
-    main()
+    save_generated(json.loads((ROOT / "profile.json").read_text(encoding="utf-8")))

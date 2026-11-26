@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="147" viewBox="0 0 390 147">
+<style>
+.line{stroke:#d0d7de}.soft-line{stroke:#eaeef2}
+.card{fill:#f6f8fa;stroke:#d0d7de}
+.mark{fill:#ffffff;stroke:#d0d7de}
+.linkedin{fill:#0a66c2}.linkedin-text{fill:#fff}
+.arrow{stroke:#57606a;fill:none}
+text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;fill:#1f2328}
+.mono,.label,.status,.intro,.mark-text{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+.hero{font-family:Georgia,'Times New Roman',serif;font-weight:600;font-style:italic;font-size:34px}
+.hero-mobile{font-size:24px}
+.intro,.status{font-size:13px}
+.label{font-size:10px;font-weight:700;letter-spacing:1.1px}
+.mark-text{font-size:12px;font-weight:700}
+.section{font-size:15px;font-weight:500}.section-mobile{font-size:18px;font-weight:600}
+.title{font-size:14px;font-weight:700}.title-mobile{font-size:17px}
+.description{font-size:12px}.description-mobile{font-size:14.5px}
+.label,.intro,.description{fill:#57606a}
+</style>
+<rect class="mark" x="12" y="28" width="44" height="44" rx="8"/>
+<text x="34.0" y="54.0" class="mark-text" text-anchor="middle">TMB</text>
+<text x="82" y="26" class="title">TMB Scan</text>
+<text x="82" y="53" class="label mono">FITNESS TECH · REQUIREMENTS</text>
+<text x="82" y="74" class="description">Mapped requirements and feature priorities</text>
+<text x="82" y="91" class="description">for a fitness assessment and</text>
+<text x="82" y="108" class="description">progress-tracking platform with Iago</text>
+<text x="82" y="125" class="description">Santana.</text>
+<path d="M368 21 L376 13 M371 13 H376 V18" class="arrow" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<line class="soft-line" x1="389" y1="1" x2="389" y2="140"/>
+<line class="line" x1="2" y1="140" x2="388" y2="140"/>
+</svg>

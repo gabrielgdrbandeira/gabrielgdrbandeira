@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="336" height="123" viewBox="0 0 336 123">
+<style>
+.line{stroke:#d0d7de}.soft-line{stroke:#eaeef2}
+.card{fill:#f6f8fa;stroke:#d0d7de}
+.mark{fill:#ffffff;stroke:#d0d7de}
+.linkedin{fill:#0a66c2}.linkedin-text{fill:#fff}
+.arrow{stroke:#57606a;fill:none}
+text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;fill:#1f2328}
+.mono,.label,.status,.intro,.mark-text{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+.hero{font-family:Georgia,'Times New Roman',serif;font-weight:600;font-style:italic;font-size:34px}
+.hero-mobile{font-size:24px}
+.intro,.status{font-size:13px}
+.label{font-size:10px;font-weight:700;letter-spacing:1.1px}
+.mark-text{font-size:12px;font-weight:700}
+.section{font-size:15px;font-weight:500}.section-mobile{font-size:18px;font-weight:600}
+.title{font-size:14px;font-weight:700}.title-mobile{font-size:17px}
+.description{font-size:12px}.description-mobile{font-size:14.5px}
+.label,.intro,.description{fill:#57606a}
+</style>
+<line class="line" x1="16" y1="6" x2="320" y2="6"/>
+<text x="16" y="36" class="hero hero-mobile">Gabriel Galvão</text>
+<text x="16" y="62" class="intro">Computer Engineering at CEFET-MG.</text>
+<text x="16" y="80" class="intro">Backend development, applied</text>
+<text x="16" y="98" class="intro">research, and 3D printing.</text>
+<line class="line" x1="16" y1="115" x2="320" y2="115"/>
+</svg>

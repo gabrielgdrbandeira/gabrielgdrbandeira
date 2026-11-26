@@ -1,105 +1,183 @@
 {
   "meta": {
     "name": "Gabriel Galvão",
-    "username": "gabrielgdrbandeira",
-    "eyebrow": "COMPUTER ENGINEERING · SOFTWARE · RESEARCH",
-    "headline": "Building software with purpose. Learning beyond the obvious.",
-    "summary": "Backend development, agile leadership, and quantum computing research at CEFET-MG."
+    "full_name": "Gabriel Galvão dos Reis Bandeira",
+    "introduction": "Computer Engineering at CEFET-MG. Backend development, applied research, and 3D printing."
   },
   "status": [
-    {
-      "label": "LEADING",
-      "value": "Scrum Master @ COMPET"
-    },
-    {
-      "label": "RESEARCHING",
-      "value": "Quantum Computing @ CEFET-MG"
-    },
-    {
-      "label": "BUILDING",
-      "value": "Backend systems @ PRISMA"
-    },
-    {
-      "label": "STUDYING",
-      "value": "Computer Engineering @ CEFET-MG"
-    }
-  ],
-  "focus": [
-    {
-      "mark": "QC",
-      "title": "Quantum Computing Research",
-      "category": "RESEARCH · PYTHON · QISKIT",
-      "description": "Building foundations in qubits, quantum circuits, core algorithms, and quantum machine learning."
-    },
-    {
-      "mark": "BE",
-      "title": "Backend Developer @ PRISMA",
-      "category": "SOFTWARE FACTORY · SOCIAL IMPACT",
-      "description": "Contributing to a management platform for INASIM, turning a real nonprofit need into working software."
-    },
-    {
-      "mark": "SM",
-      "title": "Scrum Master @ COMPET",
-      "category": "AGILE LEADERSHIP · TEAMWORK",
-      "description": "Supporting Administration, Development, Events, and Marketing through clearer sprints and continuous improvement."
-    }
-  ],
-  "experience": {
-    "title": "Systems Development Intern @ CEMSA",
-    "category": "QA · SOFTWARE MAINTENANCE · DATA VISUALIZATION",
-    "description": "Worked with software testing, web-system maintenance, the SIGAF application, and Amazon QuickSight dashboards for fatigue-test data."
-  },
-  "projects": [
-    {
-      "number": "01",
-      "title": "D'MABE",
-      "category": "NEXT.JS · TYPESCRIPT · TAILWIND CSS",
-      "description": "Responsive institutional website for business-benefits management and corporate collections.",
-      "url": "https://github.com/gabrielgdrbandeira/Dmabe"
-    },
-    {
-      "number": "02",
-      "title": "Fidelis & Cota",
-      "category": "NEXT.JS · TYPESCRIPT · RESPONSIVE UI",
-      "description": "Modern web presence for a law and consulting firm, including services, team, content, and contact flows.",
-      "url": "https://github.com/gabrielgdrbandeira/FidelisCota"
-    },
-    {
-      "number": "03",
-      "title": "3D Working Services",
-      "category": "HTML · CSS · JAVASCRIPT · GITHUB PAGES",
-      "description": "Product showcase and customer-contact experience for a custom 3D-printing business.",
-      "url": "https://github.com/gabrielgdrbandeira/3D-Working-Services"
-    }
-  ],
-  "stack": [
-    {
-      "label": "LANGUAGES",
-      "items": ["Python", "TypeScript", "C", "C++", "SQL"]
-    },
-    {
-      "label": "WEB",
-      "items": ["React", "Next.js", "Node.js", "Tailwind CSS"]
-    },
-    {
-      "label": "DATA & RESEARCH",
-      "items": ["MongoDB", "Qiskit", "Amazon QuickSight"]
-    },
-    {
-      "label": "WORKFLOW",
-      "items": ["Git", "GitHub", "Scrum", "QA", "Testing"]
-    }
+    {"label": "LEADING", "value": "Scrum Master @ CompET"},
+    {"label": "RESEARCHING", "value": "Quantum Computing @ CEFET-MG"},
+    {"label": "BUILDING", "value": "Backend Developer @ Prisma"}
   ],
   "contacts": [
     {
-      "label": "LINKEDIN",
+      "label": "LinkedIn",
+      "mark": "in",
       "value": "Gabriel Galvão dos Reis Bandeira",
       "url": "https://www.linkedin.com/in/gabriel-galv%C3%A3o-dos-reis-bandeira-7ab960372/"
     },
     {
-      "label": "GITHUB",
-      "value": "Explore my public repositories",
+      "label": "GitHub",
+      "mark": "GH",
+      "value": "gabrielgdrbandeira",
       "url": "https://github.com/gabrielgdrbandeira?tab=repositories"
     }
+  ],
+  "featured": [
+    {
+      "id": "wlayers",
+      "mark": "WL",
+      "title": "WLayers",
+      "category": "NEXT.JS · 3D PRINTING",
+      "description": "Founded WLayers and built its website, with a catalog and an interactive 3D studio for custom printing.",
+      "url": "https://wlayers.com.br/"
+    },
+    {
+      "id": "aptus",
+      "mark": "AP",
+      "title": "Aptus · HackatOhm Winner",
+      "category": "HACKATOHM 2026",
+      "description": "Co-created a prototype that matches qualified teams to bids. Team Quatro e meio won EloGroup's D03 challenge.",
+      "url": "https://github.com/santana-iago/hackatohm"
+    },
+    {
+      "id": "salamanca",
+      "mark": "CV",
+      "title": "Pollen Classification",
+      "category": "COMPUTER VISION · CEFET-MG",
+      "description": "Compared five vision models across 52 classes in VNUA-Pollen52 with Iago Santana.",
+      "details": "I also contributed to CompET's Projeto Salamanca, a related system for analyzing pollen and fungal spore samples."
+    }
+  ],
+  "other_work": [
+    {
+      "id": "compet",
+      "mark": "PET",
+      "title": "CompET · Scrum Master",
+      "category": "CEFET-MG · AGILE LEADERSHIP",
+      "description": "Coordinate four teams on planning and delivery. Previously worked on development, testing, and documentation.",
+      "details": "I joined the PET computing group in February 2025, took on Scrum for the development team in March 2026, and became Scrum Master in August 2026."
+    },
+    {
+      "id": "nfc",
+      "mark": "NFC",
+      "title": "CompET NFC Time Clock",
+      "category": "ESP8266 · RFID · OFFLINE",
+      "description": "Prototyped an offline NFC time clock with an MFRC522 reader, a real-time clock, and an admin panel."
+    },
+    {
+      "id": "quantum",
+      "mark": "QC",
+      "title": "Quantum Computing Research",
+      "category": "CEFET-MG · PYTHON · QISKIT",
+      "description": "Study qubits, entanglement, and quantum circuits in a voluntary undergraduate research project."
+    },
+    {
+      "id": "inasim",
+      "mark": "BE",
+      "title": "Prisma · INASIM",
+      "category": "VOLUNTEER · BACKEND",
+      "description": "Develop backend services for Instituto Amar é Simples, including authentication and management workflows."
+    },
+    {
+      "id": "working-software",
+      "mark": "QA",
+      "title": "Working Software · CEMSA",
+      "category": "TECHNOLOGY INTERNSHIP",
+      "description": "Tested SIGAF, helped maintain CEMSA's web systems, and built QuickSight dashboards for fatigue assessments.",
+      "details": "Internship at Working Software from February 2024 to January 2025."
+    },
+    {
+      "id": "locaweb",
+      "mark": "MCP",
+      "title": "Locaweb Email Connector",
+      "category": "NODE.JS · MCP",
+      "description": "Built a private ChatGPT connector for email search and management using IMAP and SMTP."
+    },
+    {
+      "id": "tmb-scan",
+      "mark": "TMB",
+      "title": "TMB Scan",
+      "category": "FITNESS TECH · REQUIREMENTS",
+      "description": "Mapped requirements and feature priorities for a fitness assessment and progress-tracking platform with Iago Santana.",
+      "url": "https://scan.trainingmindbody.com/login"
+    },
+    {
+      "id": "3d-working-services",
+      "mark": "3D",
+      "title": "3D Working Services",
+      "category": "HTML · CSS · JAVASCRIPT",
+      "description": "Published my original 3D printing catalog and customer contact site on GitHub Pages.",
+      "url": "https://github.com/gabrielgdrbandeira/3D-Working-Services"
+    }
+  ],
+  "websites": [
+    {
+      "id": "dmabe",
+      "mark": "DM",
+      "title": "D'MABE",
+      "category": "NEXT.JS · TYPESCRIPT",
+      "description": "Built a responsive website for a business benefits and corporate collections company.",
+      "url": "https://dmabe.com.br/",
+      "code_url": "https://github.com/gabrielgdrbandeira/Dmabe"
+    },
+    {
+      "id": "fidelis-cota",
+      "mark": "FC",
+      "title": "Fidelis & Cota",
+      "category": "NEXT.JS · TYPESCRIPT",
+      "description": "Built a law and consulting website with services, team profiles, articles, and a contact flow.",
+      "url": "https://fideliscota.com.br/",
+      "code_url": "https://github.com/gabrielgdrbandeira/FidelisCota"
+    },
+    {
+      "id": "unicapa",
+      "mark": "UC",
+      "title": "Unicapa Asfaltos",
+      "category": "HTML · CSS · JAVASCRIPT · PHP",
+      "description": "Built the institutional site with a project portfolio, service pages, and a PHP contact form.",
+      "url": "https://www.unicapa.com.br/"
+    },
+    {
+      "id": "flumen",
+      "mark": "FL",
+      "title": "Flumen Consultoria",
+      "category": "HTML · CSS · JAVASCRIPT · PHP",
+      "description": "Built an institutional website with services, news, and a contact page.",
+      "url": "https://www.flumenconsultoria.com.br/",
+      "code_url": "https://github.com/gabrielgdrbandeira/FlumenConsultoria"
+    },
+    {
+      "id": "training-mind-body",
+      "mark": "TMB",
+      "title": "Training Mind Body · Website",
+      "category": "PROTOTYPE · NEXT.JS",
+      "description": "Built an institutional website prototype for the fitness business with a sample assessment and a contact flow."
+    },
+    {
+      "id": "poexista",
+      "mark": "PX",
+      "title": "Poexista · Audiovisual Portfolio",
+      "category": "PROTOTYPE · REACT · TYPESCRIPT",
+      "description": "Built a bilingual film portfolio prototype and a local dashboard for publishing projects and credits."
+    }
+  ],
+  "practice": [
+    {
+      "title": "DevLinks practice project",
+      "description": "A personal link page built during Rocketseat's web development course.",
+      "url": "https://github.com/gabrielgdrbandeira/projeto_linktre"
+    },
+    {
+      "title": "CompET Git and GitHub workshop",
+      "description": "Practice repository for the workshop.",
+      "url": "https://github.com/gabrielgdrbandeira/miniCursoCompet"
+    }
+  ],
+  "toolkit": [
+    {"label": "Languages", "items": ["Python", "TypeScript", "JavaScript", "C", "C++", "SQL"]},
+    {"label": "Web", "items": ["React", "Next.js", "Node.js", "HTML", "CSS", "Tailwind CSS"]},
+    {"label": "Data and research", "items": ["MongoDB", "Qiskit", "Amazon QuickSight"]},
+    {"label": "Workflow", "items": ["Git", "GitHub", "Scrum", "QA", "Automated testing"]}
   ]
 }

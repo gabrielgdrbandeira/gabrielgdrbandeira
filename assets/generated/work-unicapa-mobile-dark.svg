@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="336" height="156" viewBox="0 0 336 156">
+<style>
+.line{stroke:#30363d}.soft-line{stroke:#21262d}
+.card{fill:#161b22;stroke:#30363d}
+.mark{fill:#0d1117;stroke:#30363d}
+.linkedin{fill:#0a66c2}.linkedin-text{fill:#fff}
+.arrow{stroke:#9aa4b2;fill:none}
+text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;fill:#f0f6fc}
+.mono,.label,.status,.intro,.mark-text{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+.hero{font-family:Georgia,'Times New Roman',serif;font-weight:600;font-style:italic;font-size:34px}
+.hero-mobile{font-size:24px}
+.intro,.status{font-size:13px}
+.label{font-size:10px;font-weight:700;letter-spacing:1.1px}
+.mark-text{font-size:12px;font-weight:700}
+.section{font-size:15px;font-weight:500}.section-mobile{font-size:18px;font-weight:600}
+.title{font-size:14px;font-weight:700}.title-mobile{font-size:17px}
+.description{font-size:12px}.description-mobile{font-size:14.5px}
+.label,.intro,.description{fill:#9aa4b2}
+</style>
+<rect class="mark" x="16" y="12" width="44" height="44" rx="8"/>
+<text x="38.0" y="38.0" class="mark-text" text-anchor="middle">UC</text>
+<text x="76" y="37" class="title title-mobile">Unicapa Asfaltos</text>
+<text x="16" y="69" class="label mono">HTML · CSS · JAVASCRIPT · PHP</text>
+<text x="16" y="92" class="description description-mobile">Built the institutional site with a</text>
+<text x="16" y="112" class="description description-mobile">project portfolio, service pages, and a</text>
+<text x="16" y="132" class="description description-mobile">PHP contact form.</text>
+<path d="M312 28 L320 20 M315 20 H320 V25" class="arrow" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<line class="line" x1="16" y1="149" x2="320" y2="149"/>
+</svg>
