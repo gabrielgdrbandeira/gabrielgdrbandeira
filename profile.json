@@ -5,7 +5,7 @@
     "introduction": "Computer Engineering at CEFET-MG. Backend development, applied research, and 3D printing."
   },
   "status": [
-    {"label": "LEADING", "value": "Scrum Master @ CompET"},
+    {"label": "LEADING", "value": "Scrum Master @ COMPET"},
     {"label": "RESEARCHING", "value": "Quantum Computing @ CEFET-MG"},
     {"label": "BUILDING", "value": "Backend Developer @ Prisma"}
   ],
@@ -18,7 +18,7 @@
     },
     {
       "label": "GitHub",
-      "mark": "GH",
+      "image": "assets/media/github.png",
       "value": "gabrielgdrbandeira",
       "url": "https://github.com/gabrielgdrbandeira?tab=repositories"
     }
@@ -26,7 +26,7 @@
   "featured": [
     {
       "id": "wlayers",
-      "mark": "WL",
+      "image": "assets/media/wlayers.png",
       "title": "WLayers",
       "category": "NEXT.JS · 3D PRINTING",
       "description": "Founded WLayers and built its website, with a catalog and an interactive 3D studio for custom printing.",
@@ -34,7 +34,7 @@
     },
     {
       "id": "aptus",
-      "mark": "AP",
+      "image": "assets/media/aptus.png",
       "title": "Aptus · HackatOhm Winner",
       "category": "HACKATOHM 2026",
       "description": "Co-created a prototype that matches qualified teams to bids. Team Quatro e meio won EloGroup's D03 challenge.",
@@ -42,46 +42,46 @@
     },
     {
       "id": "salamanca",
-      "mark": "CV",
+      "image": "assets/media/salamanca.png",
       "title": "Pollen Classification",
       "category": "COMPUTER VISION · CEFET-MG",
       "description": "Compared five vision models across 52 classes in VNUA-Pollen52 with Iago Santana.",
-      "details": "I also contributed to CompET's Projeto Salamanca, a related system for analyzing pollen and fungal spore samples."
+      "details": "I also contributed to COMPET's Projeto Salamanca, a related system for analyzing pollen and fungal spore samples."
     }
   ],
   "other_work": [
     {
       "id": "compet",
-      "mark": "PET",
-      "title": "CompET · Scrum Master",
+      "image": "assets/media/compet.png",
+      "title": "COMPET · Scrum Master",
       "category": "CEFET-MG · AGILE LEADERSHIP",
       "description": "Coordinate four teams on planning and delivery. Previously worked on development, testing, and documentation.",
       "details": "I joined the PET computing group in February 2025, took on Scrum for the development team in March 2026, and became Scrum Master in August 2026."
     },
     {
       "id": "nfc",
-      "mark": "NFC",
-      "title": "CompET NFC Time Clock",
+      "image": "assets/media/nfc.png",
+      "title": "Ponto COMPET",
       "category": "ESP8266 · RFID · OFFLINE",
       "description": "Prototyped an offline NFC time clock with an MFRC522 reader, a real-time clock, and an admin panel."
     },
     {
       "id": "quantum",
-      "mark": "QC",
+      "image": "assets/media/quantum.png",
       "title": "Quantum Computing Research",
       "category": "CEFET-MG · PYTHON · QISKIT",
       "description": "Study qubits, entanglement, and quantum circuits in a voluntary undergraduate research project."
     },
     {
       "id": "inasim",
-      "mark": "BE",
+      "image": "assets/media/inasim.png",
       "title": "Prisma · INASIM",
       "category": "VOLUNTEER · BACKEND",
       "description": "Develop backend services for Instituto Amar é Simples, including authentication and management workflows."
     },
     {
       "id": "working-software",
-      "mark": "QA",
+      "image": "assets/media/working-software.png",
       "title": "Working Software · CEMSA",
       "category": "TECHNOLOGY INTERNSHIP",
       "description": "Tested SIGAF, helped maintain CEMSA's web systems, and built QuickSight dashboards for fatigue assessments.",
@@ -89,14 +89,14 @@
     },
     {
       "id": "locaweb",
-      "mark": "MCP",
+      "image": "assets/media/locaweb.png",
       "title": "Locaweb Email Connector",
       "category": "NODE.JS · MCP",
       "description": "Built a private ChatGPT connector for email search and management using IMAP and SMTP."
     },
     {
       "id": "tmb-scan",
-      "mark": "TMB",
+      "image": "assets/media/tmb-scan.png",
       "title": "TMB Scan",
       "category": "FITNESS TECH · REQUIREMENTS",
       "description": "Mapped requirements and feature priorities for a fitness assessment and progress-tracking platform with Iago Santana.",
@@ -104,7 +104,7 @@
     },
     {
       "id": "3d-working-services",
-      "mark": "3D",
+      "image": "assets/media/3d-working-services.png",
       "title": "3D Working Services",
       "category": "HTML · CSS · JAVASCRIPT",
       "description": "Published my original 3D printing catalog and customer contact site on GitHub Pages.",
@@ -114,7 +114,7 @@
   "websites": [
     {
       "id": "dmabe",
-      "mark": "DM",
+      "image": "assets/media/dmabe.png",
       "title": "D'MABE",
       "category": "NEXT.JS · TYPESCRIPT",
       "description": "Built a responsive website for a business benefits and corporate collections company.",
@@ -123,7 +123,7 @@
     },
     {
       "id": "fidelis-cota",
-      "mark": "FC",
+      "image": "assets/media/fidelis-cota.png",
       "title": "Fidelis & Cota",
       "category": "NEXT.JS · TYPESCRIPT",
       "description": "Built a law and consulting website with services, team profiles, articles, and a contact flow.",
@@ -132,7 +132,7 @@
     },
     {
       "id": "unicapa",
-      "mark": "UC",
+      "image": "assets/media/unicapa.png",
       "title": "Unicapa Asfaltos",
       "category": "HTML · CSS · JAVASCRIPT · PHP",
       "description": "Built the institutional site with a project portfolio, service pages, and a PHP contact form.",
@@ -140,7 +140,7 @@
     },
     {
       "id": "flumen",
-      "mark": "FL",
+      "image": "assets/media/flumen.png",
       "title": "Flumen Consultoria",
       "category": "HTML · CSS · JAVASCRIPT · PHP",
       "description": "Built an institutional website with services, news, and a contact page.",
@@ -149,14 +149,14 @@
     },
     {
       "id": "training-mind-body",
-      "mark": "TMB",
+      "image": "assets/media/training-mind-body.png",
       "title": "Training Mind Body · Website",
       "category": "PROTOTYPE · NEXT.JS",
       "description": "Built an institutional website prototype for the fitness business with a sample assessment and a contact flow."
     },
     {
       "id": "poexista",
-      "mark": "PX",
+      "image": "assets/media/poexista.png",
       "title": "Poexista · Audiovisual Portfolio",
       "category": "PROTOTYPE · REACT · TYPESCRIPT",
       "description": "Built a bilingual film portfolio prototype and a local dashboard for publishing projects and credits."
@@ -169,7 +169,7 @@
       "url": "https://github.com/gabrielgdrbandeira/projeto_linktre"
     },
     {
-      "title": "CompET Git and GitHub workshop",
+      "title": "COMPET Git and GitHub workshop",
       "description": "Practice repository for the workshop.",
       "url": "https://github.com/gabrielgdrbandeira/miniCursoCompet"
     }

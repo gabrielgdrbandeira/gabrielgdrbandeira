@@ -18,7 +18,7 @@ text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 .label,.intro,.description{fill:#57606a}
 </style>
 <text x="16" y="21" class="label mono">LEADING</text>
-<text x="16" y="43" class="status">Scrum Master @ CompET</text>
+<text x="16" y="43" class="status">Scrum Master @ COMPET</text>
 <line class="line" x1="16" y1="55" x2="320" y2="55"/>
 <text x="16" y="81" class="label mono">RESEARCHING</text>
 <text x="16" y="103" class="status">Quantum Computing @ CEFET-MG</text>

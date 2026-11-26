@@ -3,6 +3,7 @@
 # See LICENSE.profile-template in this directory.
 from __future__ import annotations
 
+import base64
 import html
 import json
 from pathlib import Path
@@ -86,6 +87,17 @@ def mark(parts: list[str], x: int, y: int, size: int, label: str, *, linkedin: b
     add_text(parts, x + size / 2, y + size / 2 + 4, label, text_css, center=True)
 
 
+def thumbnail(parts: list[str], x: int, y: int, width: int, height: int, path: str) -> None:
+    encoded = base64.b64encode((ROOT / path).read_bytes()).decode("ascii")
+    frame = f'x="{x}" y="{y}" width="{width}" height="{height}"'
+    parts.append(f'<clipPath id="thumbnail"><rect {frame} rx="8"/></clipPath>')
+    parts.append(f'<rect class="mark" {frame} rx="8"/>')
+    parts.append(
+        f'<image {frame} href="data:image/png;base64,{encoded}" '
+        'preserveAspectRatio="xMidYMid meet" clip-path="url(#thumbnail)"/>'
+    )
+
+
 def arrow(parts: list[str], x: int, y: int) -> None:
     parts.append(
         f'<path d="M{x-4} {y+4} L{x+4} {y-4} M{x-1} {y-4} H{x+4} V{y+1}" '
@@ -151,7 +163,10 @@ def contact(item: dict, mobile: bool, theme: str) -> str:
     width, height = (MOBILE_WIDTH, 76) if mobile else (265, 76)
     parts = svg_open(width, height, theme)
     parts.append(f'<rect class="card" x=".5" y="3.5" width="{width - 1}" height="68" rx="10"/>')
-    mark(parts, 20, 23, 28, item["mark"], linkedin=item["label"] == "LinkedIn")
+    if item.get("image"):
+        thumbnail(parts, 20, 23, 28, 28, item["image"])
+    else:
+        mark(parts, 20, 23, 28, item["mark"], linkedin=item["label"] == "LinkedIn")
     add_text(parts, 60, 28, item["label"].upper(), "label mono")
     values = wrap_words(item["value"], 30 if mobile else 22)
     add_lines(parts, 60, 51 if len(values) == 1 else 45, values, "status", 15)
@@ -176,7 +191,7 @@ def mobile_card(item: dict, theme: str) -> str:
     description_y = category_y + 14 * (len(categories) - 1) + 23
     bottom = description_y + 20 * (len(descriptions) - 1) + 17
     parts = svg_open(MOBILE_WIDTH, bottom + 7, theme)
-    mark(parts, 16, 12, 44, item["mark"])
+    thumbnail(parts, 16, 12, 54, 44, item["image"])
     add_lines(parts, 76, title_y, titles, "title title-mobile", 20)
     add_lines(parts, 16, category_y, categories, "label mono", 14)
     add_lines(parts, 16, description_y, descriptions, "description description-mobile", 20)
@@ -199,7 +214,7 @@ def desktop_cards(items: list[dict], theme: str, *, featured: bool) -> list[str]
     slides = []
     for index, item in enumerate(items):
         parts = svg_open(width, bottom + 7, theme)
-        mark(parts, 8 if featured else 12, 10 if featured else 28, 44, item["mark"])
+        thumbnail(parts, 8 if featured else 12, 10 if featured else 28, 54, 44, item["image"])
         add_lines(parts, title_x, title_y, titles[index], "title", 17)
         add_lines(parts, title_x, category_y, categories[index], "label mono", 13)
         add_lines(parts, description_x, description_y, descriptions[index], "description", 17)
