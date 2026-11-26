@@ -60,7 +60,7 @@
     },
     {
       "id": "nfc",
-      "image": "assets/media/nfc.png",
+      "image": "assets/media/compet.png",
       "title": "Ponto COMPET",
       "category": "ESP8266 · RFID · OFFLINE",
       "description": "Prototyped an offline NFC time clock with an MFRC522 reader, a real-time clock, and an admin panel."
@@ -101,14 +101,6 @@
       "category": "FITNESS TECH · REQUIREMENTS",
       "description": "Mapped requirements and feature priorities for a fitness assessment and progress-tracking platform with Iago Santana.",
       "url": "https://scan.trainingmindbody.com/login"
-    },
-    {
-      "id": "3d-working-services",
-      "image": "assets/media/3d-working-services.png",
-      "title": "3D Working Services",
-      "category": "HTML · CSS · JAVASCRIPT",
-      "description": "Published my original 3D printing catalog and customer contact site on GitHub Pages.",
-      "url": "https://github.com/gabrielgdrbandeira/3D-Working-Services"
     }
   ],
   "websites": [
@@ -149,7 +141,7 @@
     },
     {
       "id": "training-mind-body",
-      "image": "assets/media/training-mind-body.png",
+      "image": "assets/media/tmb-scan.png",
       "title": "Training Mind Body · Website",
       "category": "PROTOTYPE · NEXT.JS",
       "description": "Built an institutional website prototype for the fitness business with a sample assessment and a contact flow."

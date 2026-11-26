@@ -27,6 +27,5 @@ text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 <text x="82" y="108" class="description">progress-tracking platform with Iago</text>
 <text x="82" y="125" class="description">Santana.</text>
 <path d="M368 21 L376 13 M371 13 H376 V18" class="arrow" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-<line class="soft-line" x1="389" y1="1" x2="389" y2="140"/>
 <line class="line" x1="2" y1="140" x2="388" y2="140"/>
 </svg>
